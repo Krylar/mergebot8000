@@ -2,59 +2,31 @@ exports.run = async (client, message, args, level) => {
   const friendly = client.config.permLevels.find(l => l.level === level).name;
 //  message.reply(`Your permission level is: ${level} - ${friendly}`);
 
-  message.channel.send("Processing request. Please stand by...");
-
   // ********** SETUP **********
   // get merging role
-  let tgtRole = message.guild.roles.find("name", "merging");
+  let tgtRole = message.guild.roles.find(r => r.name == "merging");
 
   // get server
   let g = message.guild;
 
   // get merge_world_bulletin
-  let mBulletin = g.channels.find("name", "merge_world_bulletin");
+  let mBulletin = await g.channels.find(c => c.name == "merge_world_bulletin");
 
   // get merge_chat
-  let mChat = await g.channels.find("name", "merge_chat");
-
-//  message.channel.send(`Merge chat: ${mChat.toString()}`);
-
+  let mChat = await g.channels.find(c => c.name == "merge_chat");
 
   // ********** LOOP FOR EACH SERVER **********
-  args.forEach(function(arg) {
-//    console.log("Moving channel");
-    message.channel.send(`Processing ${arg}...`);
-    // ********** MOVE CHANNEL **********
-    let mChannel = client.channels.find("name", arg.toString());
-    //let mChat = client.channels.find("name", "merge-chat");
-//    message.channel.send(`Channel parent: ${mChannel.parent}`);
-
-//    message.channel.send("  Moving channel to MERGE...");
-
-//    mChannel.setParent(mCategory.id, "server merge announcement")
-   //   .then(udpated => console.log("..parent updated")
-//      .catch(console.error);
-//    message.channel.send("  Moving channel to MERGE...");
-
-
-    // ********** ADD MERGING ROLE **********
-    // get role
-    let mRole = message.guild.roles.find("name", arg.toString());
-    //message.channel.send(`Looping for ${arg.toString()}`);
+  args.forEach(async function(arg) {
+//    message.channel.send(`Processing ${arg}...`);
+    let mChannel = client.channels.find(c => c.name == arg.toString());
+    let mRole = await message.guild.roles.find(r => r.name == arg.toString());
 
     // check if role exists
     if (!mRole) {
       message.channel.send(`Role for ${arg} does not exist! Skipping.`);
     } else {
-      // get users with role
-      let membersWithRole = mRole.members;
-      //console.log(`Got ${membersWithRole.size} members with that role.`);
-
-      // give all members the merging role
-      membersWithRole.forEach(function(mem) {
-        mem.addRole(tgtRole)
-      });
-      //message.channel.send(`Users with role ${mRole.toString()} have been flagged as @merging`);
+      // give server role access to the #merge-chat
+      mChat.overwritePermissions(mRole,{VIEW_CHANNEL: true});
 
       // ********** ANNOUNCEMENTS **********
       // Server channel
@@ -62,15 +34,9 @@ exports.run = async (client, message, args, level) => {
         mChannel.send(`Server ${mRole} has received a merge announcement! All members now have access to ${mChat.toString()} to prepare for merge!.`);
       }
       // merge bulletin
-  //    mBulletin.send(`Merge announcement! Server ${arg.toString()} has been flagged for merge! @${arg.toString()}`);
       mBulletin.send(`Server ${mRole} has received a merge announcement! All members now have access to ${mChat.toString()} to prepare for merge!.`);
-  }
-
-
-  });
-
-  message.channel.send("...done!");
-
+    }
+  }); // args.forEach
 };
 
 exports.conf = {
