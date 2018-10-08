@@ -4,32 +4,18 @@ exports.run = async (client, message, args, level) => {
 
   message.channel.send("Processing request. Please stand by...");
 
-
   // ********** SETUP **********
   // get merging role
   let tgtRole = message.guild.roles.find("name", "merging");
-//    tgtRole.then(updated => message.channel.send(`Role (merging): ${tgtRole}`))
-//    .catch(console.error);
 
   // get server
   let g = message.guild;
-//    .then(updated => message.channel.send(`Server: ${g.name}`));
-//  message.channel.send(`Server: ${message.guild.name}`);
-
-  // get merge category
-//  let mCategory = g.channels.find("name", "merge"); // no merge category on DoW
-//    .then(updated => message.channel.send(`Category (Merge): ${mCategory.name}`));
-
-//  message.channel.send(`Merge category: ${mCategory.toString()}`);
 
   // get merge_world_bulletin
   let mBulletin = g.channels.find("name", "merge_world_bulletin");
-//    .then(updated => message.channel.send(`Channel (Bulletin): ${mBulletin}`));
-//  message.channel.send(`Merge bulletin channel: ${mBulletin.toString()}`);
 
   // get merge_chat
-  let mChat = g.channels.find("name", "merge_chat");
-//    .then(updated => message.channel.send(`Channel (Merge): ${mChat}`));
+  let mChat = await g.channels.find("name", "merge_chat");
 
 //  message.channel.send(`Merge chat: ${mChat.toString()}`);
 
