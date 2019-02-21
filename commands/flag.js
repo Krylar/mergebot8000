@@ -31,7 +31,7 @@ exports.run = async (client, message, args, level) => {
       // ********** ANNOUNCEMENTS **********
       // Server channel
       if(mChannel) {
-        mChannel.send(`Server ${mRole} has received a merge announcement! All members now have access to ${mChat.toString()} to prepare for merge!.`);
+        mChannel.send(`Server ${mRole.name} has received a merge announcement! All members now have access to ${mChat.toString()} to prepare for merge!.`);
       }
       // merge bulletin
       mBulletin.send(`Server ${mRole} has received a merge announcement! All members now have access to ${mChat.toString()} to prepare for merge!.`);
