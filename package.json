@@ -1,6 +1,6 @@
 {
   "name": "mergebot8000",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "A boilerplate example bot with command handler and reloadable commands. Updated and Maintained by the Idiot's Guide Community",
   "main": "index.js",
   "scripts": {

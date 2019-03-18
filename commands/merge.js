@@ -118,7 +118,7 @@ exports.run = async (client, message, args, level) => {
       mentionable: true,
       hoist: true,
       // create new role at top of server list (below @merging role)
-      position: mergingRole.position + 1,
+      position: mergingRole.position - 1,
     });
     console.log(`Created new role with name ${tgtRole.name} and color ${tgtRole.color}`);
   }
