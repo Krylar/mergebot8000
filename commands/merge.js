@@ -60,7 +60,7 @@ exports.run = async (client, message, args, level) => {
 
 
   // get merging role
-  let mergingRole = g.roles.find("name", "merging");
+  let mergingRole = g.roles.find("name", "MergeBot8000");
 
 
   // get merge category
